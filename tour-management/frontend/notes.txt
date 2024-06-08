@@ -1,0 +1,4 @@
+make router/routes.js   componet -> header , footer , layout   make diff diff pages in pages folder  
+in layout write header , router , footer 
+define diff routes in the router.js
+add layout in app.jsx and browseRouter in index.js
