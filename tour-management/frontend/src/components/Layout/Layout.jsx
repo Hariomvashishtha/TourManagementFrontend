@@ -10,7 +10,7 @@ const Layout = () => {
 
   useEffect(() => {
     // Set the alert message when the component mounts
-    setAlertMessage('Backend is under progress  and open in deskyop for better ui and mobile view is under progress!');
+    setAlertMessage('Backend is under progress  and open in desktop  for better ui and mobile view is under progress!');
   }, []);
 
   const [isMobileView, setIsMobileView] = useState(false);
@@ -31,7 +31,7 @@ const Layout = () => {
   }, []);
   return (
     <>
-     && <AlertMessage message={alertMessage} />
+      <AlertMessage message={alertMessage} />
     <Header />
     <main>
     <Routers />
