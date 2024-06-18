@@ -10,7 +10,7 @@ const Layout = () => {
 
   useEffect(() => {
     // Set the alert message when the component mounts
-    setAlertMessage('Backend is under progress !');
+    setAlertMessage('Backend is under progress  and open in deskyop for better ui and mobile view is under progress!');
   }, []);
   return (
     <>
