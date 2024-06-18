@@ -78,7 +78,7 @@ const Header = () => {
                     className="btn primary__btn"
                   >
                     <Link
-                      to="/register"
+                      to="/signup"
                       style={{ color: "white", textDecoration: "none" }}
                     >
                       register
