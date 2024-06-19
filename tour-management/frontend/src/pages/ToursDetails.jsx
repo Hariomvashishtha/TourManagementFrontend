@@ -23,7 +23,7 @@ const ToursDetails = () => {
   
   // this is static data , later we will fetch from backend
   const tour = toutData.find((item) => item.id == id);
-  console.log(tour); // destructur properties from tour
+  //console.log(tour); // destructur properties from tour
   // format date
   const options = {
     day: "2-digit",

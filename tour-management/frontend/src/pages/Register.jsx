@@ -24,13 +24,13 @@ const Register = () => {
     <section>
       <Container>
         <Row>
-          <Col lg="8" className="m-auto">
-            <div className="login__container d-flex justify-content-between">
-              <div className="login__img">
+          <Col lg="8"  sm="12" md="10" className="m-auto">
+            <div className="flex-column login__container d-flex flex-lg-row justify-content-between">
+              <div className="mx-auto login__img d-flex">
                 <img src={registerImage} alt="" />
               </div>
 
-              <div className="login__form">
+              <div className="login__form sm:w-full md:w-full lg:w-2/5 " sm="12" md="10">
                 <div className="user">
                   <img src={userIcon} alt="" />
                 </div>

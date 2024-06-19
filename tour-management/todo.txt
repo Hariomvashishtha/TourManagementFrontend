@@ -1,0 +1,1 @@
+pagaination not implement correctly in tours.jsx

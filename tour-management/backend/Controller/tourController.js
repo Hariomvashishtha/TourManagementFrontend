@@ -108,7 +108,9 @@ export  const getToursBySearch = async (req, res) => {
     // const city = req.query.city;
     // const distance = req.query.distance;
     // const maxGroupSize = req.query.maxGroupSize;
-    const city=new RegExp(req.query.city,"i"); // i means case sensitive 
+    const city=new RegExp(req.query.city,"i"); // i means case insensitive 
+    // const city=req.query.city;
+    // const city='Bali';
     const distance = parseInt(req.query.distance);
     const maxGroupSize = parseInt(req.query.maxGroupSize);
     try {

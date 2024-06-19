@@ -14,6 +14,7 @@ const Layout = () => {
   }, []);
 
   const [isMobileView, setIsMobileView] = useState(false);
+   //console.log(isMobileView);
 
   useEffect(() => {
     const handleResize = () => {
