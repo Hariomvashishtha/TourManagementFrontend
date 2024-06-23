@@ -1,5 +1,5 @@
 import React from "react";
-import {useState, useEffect} from "react";
+import {useState, useEffect, useContext} from "react";
 import "./booking-css.css";
 import {
   Form,
@@ -9,30 +9,58 @@ import {
   ListGroupItem,
 } from "reactstrap";
 import { useNavigate } from "react-router-dom";
-
+import {AuthContext} from "../../context/AuthContext";
+import {BASE_URL} from "../../utils/Config";
 const Booking = ({ tour, avgRating }) => {
   const handleChange = (e) => {
-    setCredentials((prev) => ({ ...prev, [e.target.id]: e.target.value }));
+    setBooking((prev) => ({ ...prev, [e.target.id]: e.target.value }));
   };
-  const { price, reviews } = tour;
+  const { price, reviews , title } = tour;
   const navigate=useNavigate();
+  const {user} = useContext(AuthContext);
   const service=10;
   
 
-  const [credentials, setCredentials] = useState({
-    userId : "01",
+  const [booking, setBooking] = useState({
+    userId : user && user.user._id,
     fullName: "",
-    userEmail: "",
+    userEmail: user && user.user.email,
     phone: "",
     bookAt: "",
     guestSize: "",
+    tourName : title
   });
-  const totalAmount =Number(price) *Number(credentials.guestSize || 1) +Number(service);
-  const handleClick = (e) => {
+  const totalAmount =Number(price) *Number(booking.guestSize || 1) +Number(service);
+  const handleClick =async (e) => {
     e.preventDefault();
-    console.log(credentials);
-    navigate("/thank-you");
-    
+    debugger;
+    console.log(booking);
+    try
+    {
+      if(!user || user===null || user===undefined)
+        {
+          navigate("/login");
+          return;
+        }
+      const res = await fetch(`${BASE_URL}/booking`, {
+        method: "post",
+        headers: {
+          "content-type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(booking),
+      });
+      const result = await res.json();
+      if (!res.ok){
+        throw new Error(result.message);
+      } 
+      console.log(result);
+      navigate("/thank-you");
+      return ;
+    } catch (err) {
+      console.log(err);
+      alert("Something went wrong  in booking " + err.message);
+    }
   };
   return (
     <div className="booking">
