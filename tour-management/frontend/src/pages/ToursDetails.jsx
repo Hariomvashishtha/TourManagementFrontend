@@ -45,28 +45,26 @@ const ToursDetails = () => {
     distance,
     maxGroupSize,
   } = tour?.data || {};
-  debugger;
   const { totalRating, avgRating } = calculateAvgRating(reviews);
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
     const reviewText = reviewMsgRef.current.value;
-    // alert(`${reviewText} and ${tourRating} rating`);
-    // later we will call our api 
 
-    
-    try
-    {
-      if(!user || user ===undefined || user === null){
-        alert("please login or signup");
-      }
+    try {
+        if (!user) {
+            alert("Please login or signup");
+            return;
+        }
+
         const reviewObj = {
-            username: user?.username,
+            username: user?.username || user?.user?.username,
             reviewText,
-            rating: tourRating
+            rating: tourRating || 0
         };
+
         console.log(reviewObj);
-        // later we will send this reviewObj to our backend
-        const res = fetch(`${BASE_URL}/review/${id}`,{
+
+        const res = await fetch(`${BASE_URL}/review/${id}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -74,19 +72,21 @@ const ToursDetails = () => {
             credentials: "include",
             body: JSON.stringify(reviewObj)
         });
-        const result = res.json();
-        if(!res.ok) return alert(result.message);
+
+        if (!res.ok) {
+            const result = await res.json(); // Await response body for error message
+            return alert(result.message || "Something went wrong in review submission");
+        }
+
+        const result = await res.json();
         console.log(result);
-        alert("Review submitted" + result.message);
-        
-        
-    }
-    catch(err)
-    {
+        alert("Review submitted: " + result.message);
+    } catch (err) {
         console.log(err);
-        alert("Something went wrong " + err.message);
+        alert("Something went wrong: " + err.message);
     }
-  };
+};
+
   useEffect(() => {
     window.scrollTo(0, 0);
     
@@ -144,23 +144,23 @@ const ToursDetails = () => {
                 </div>
   
                 {/* tour reviews */}
-                <div className="mt-4 tour__reviews">
+                {/* <div className="mt-4 tour__reviews">
                   <h4>Reviews ({reviews?.length} reviews)</h4>
                   <Form >
                     <div className="gap-3 mb-4 d-flex align-items-center rating__group">
-                      <span onClick={()=>setTourRating(1)}>
+                      <span onClick={()=>setTourRating(1)} className={tourRating>=1 ? "rated" : "unrated"}>
                         1 <i class="ri-star-s-fill"></i>
                       </span>
-                      <span onClick={()=>setTourRating(2)}>
+                      <span onClick={()=>setTourRating(2)} className={tourRating>=2 ? "rated" : "unrated"}>
                         2 <i class="ri-star-s-fill"></i>
                       </span>
-                      <span onClick={()=>setTourRating(3)}>
+                      <span onClick={()=>setTourRating(3)} className={tourRating>=3 ? "rated" : "unrated"}>
                         3 <i class="ri-star-s-fill"></i>
                       </span>
-                      <span onClick={()=>setTourRating(4)}>
+                      <span onClick={()=>setTourRating(4)} className={tourRating>=4 ? "rated" : "unrated"}>
                         4 <i class="ri-star-s-fill"></i>
                       </span>
-                      <span onClick={()=>setTourRating(5)}>
+                      <span onClick={()=>setTourRating(5)} className={tourRating>=5 ? "rated" : "unrated"}>
                         5 <i class="ri-star-s-fill"></i>
                       </span>
                     </div>
@@ -194,7 +194,7 @@ const ToursDetails = () => {
                       </div>
                     ))}
                   </ListGroup>
-                </div>
+                </div>  */}
               </div>
             </Col>
             <Col className="mt-4" lg="4">

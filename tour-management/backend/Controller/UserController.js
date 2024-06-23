@@ -5,13 +5,13 @@ export const createUser = async (req, res) => {
     const newUser = new User(req.body);
     try {
         const savedUser = await newUser.save();
-        res.status(200).json({
+        return res.status(200).json({
             success: true,
             message: "User created successfully",
             data: savedUser
         });
     } catch (error) {
-        res.status(500).json({
+        return res.status(500).json({
             success: false,
             message: "Failed to create User try again ",
         });
@@ -25,13 +25,13 @@ export  const updateUser = async (req, res) => {
             $set: req.body
         }, { new: true });
         // set the fields from body to new value , new: true send update one, mongo by deafult send original one 
-        res.status(200).json({
+        return res.status(200).json({
             success: true,
             message: "User updated successfully",
             data: updatedUser
         });
     } catch (error) {
-        res.status(500).json({
+        return res.status(500).json({
             success: false,
             message: "Failed to update User try again ",
         });

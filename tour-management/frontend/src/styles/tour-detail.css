@@ -104,5 +104,11 @@
 .review__item span {
     font-weight: 500;
 }
-
+.rated .ri-star-s-fill {
+    color: gold; /* or any color for rated stars */
+  }
+  
+  .unrated .ri-star-s-fill {
+    color: lightgray; /* or any color for unrated stars */
+  }
 
