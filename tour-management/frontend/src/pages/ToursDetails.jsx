@@ -144,7 +144,7 @@ const ToursDetails = () => {
                 </div>
   
                 {/* tour reviews */}
-                {/* <div className="mt-4 tour__reviews">
+                <div className="mt-4 tour__reviews">
                   <h4>Reviews ({reviews?.length} reviews)</h4>
                   <Form >
                     <div className="gap-3 mb-4 d-flex align-items-center rating__group">
@@ -194,7 +194,7 @@ const ToursDetails = () => {
                       </div>
                     ))}
                   </ListGroup>
-                </div>  */}
+                </div> 
               </div>
             </Col>
             <Col className="mt-4" lg="4">

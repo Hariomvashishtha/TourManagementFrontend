@@ -3,11 +3,16 @@ export const createBooking = async (req, res) => {
     const newBooking = new Booking(req.body);
     try {
         const savedBooking = await newBooking.save();
-        return  res.status(200).json({
+        // if (res.headersSent) {
+        //     console.error("Headers already sent.");
+        //     return;
+        // }
+         res.status(200).json({
             success: true,
             message: "Booking created successfully",
             data: savedBooking
         });
+      
     } catch (error) {
        return  res.status(500).json({
             success: false,
