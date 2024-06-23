@@ -1,10 +1,11 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect } from "react";
+import React, { useEffect ,useContext} from "react";
 import {  Row, Button, Container } from "reactstrap";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link,useNavigate } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
 import { useRef } from "react";
 import './header.css';
+import { AuthContext } from "../../context/AuthContext";
 const nav_links = [
   {
     path: "/",
@@ -21,6 +22,15 @@ const nav_links = [
 ];
 const Header = () => {
   const headerRef = useRef(null);
+  const navigate = useNavigate();
+  const { user, dispatch } = useContext(AuthContext);
+ // debugger;
+
+  const logout = () => {
+    dispatch({ type: "LOGOUT" });
+    navigate("/login");
+    window.location.reload();
+  }
   const stikyHeader = () => {
     window.addEventListener("scroll", () => {
       if (
@@ -69,7 +79,21 @@ const Header = () => {
               </div>
               <div className="gap-4 nav__right d-flex align-items-center">
                 <div className="gap-4 nav__btns d-flex align-items-center">
-                  <Button
+                  {user ? (
+                    <>
+                    <h5 className="mb-0">{user.user.username || user.email}</h5>
+                  
+                    <Button
+                      className="btn btn-dark"
+                      onClick={logout}
+                    >
+                      Logout
+                    </Button>
+                    </>
+                    
+                  ) : (
+                    <>
+                     <Button
                     className="btn secondary__btn"
                   >
                     <Link to="/login" className="font-bold text-black" style={{  textDecoration: "none" }}>Login</Link>
@@ -84,6 +108,9 @@ const Header = () => {
                       register
                     </Link>
                   </Button>
+                    </>
+                  )}
+                 
                 </div>
                 <span className="mobile_menu">
                   <i class="ri-menu-line"></i>

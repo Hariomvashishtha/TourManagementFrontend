@@ -17,7 +17,7 @@ const Tours = () => {
     data: { data: tourCount },
   } = useFetch(`${BASE_URL}/tours/search/getTourCount`);
   
-  debugger;
+  //debugger;
   // useEffect(() => {
   //   setPageCount(1);
   // },[])

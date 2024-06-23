@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect,useContext } from "react";
 import "../styles/tour-detail.css";
 import {
   Container,
@@ -17,17 +17,18 @@ import Booking from "../components/Booking/Booking.jsx";
 import Newsletter from "../shared/Newsletter.jsx";
 import {BASE_URL} from "../utils/Config.js";
 import useFetch from "../Hooks/useFetch.js";
+import {AuthContext} from "../context/AuthContext";
 const ToursDetails = () => {
   const { id } = useParams();
   const reviewMsgRef = useRef('');
   const [tourRating, setTourRating] = useState(null);
+  const {user} = useContext(AuthContext);
   
   // this is static data , later we will fetch from backend
   // const tour = toutData.find((item) => item.id == id);
   const {data:tour,loading,error} = useFetch(`${BASE_URL}/tours/${id}`);
   console.log("tourcoming");
   console.log(tour.data);
-  debugger;
   const options = {
     day: "2-digit",
     month: "long",
@@ -44,12 +45,47 @@ const ToursDetails = () => {
     distance,
     maxGroupSize,
   } = tour?.data || {};
+  debugger;
   const { totalRating, avgRating } = calculateAvgRating(reviews);
   const submitHandler = (e) => {
     e.preventDefault();
     const reviewText = reviewMsgRef.current.value;
     // alert(`${reviewText} and ${tourRating} rating`);
     // later we will call our api 
+
+    
+    try
+    {
+      if(!user || user ===undefined || user === null){
+        alert("please login or signup");
+      }
+        const reviewObj = {
+            username: user?.username,
+            reviewText,
+            rating: tourRating
+        };
+        console.log(reviewObj);
+        // later we will send this reviewObj to our backend
+        const res = fetch(`${BASE_URL}/review/${id}`,{
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            credentials: "include",
+            body: JSON.stringify(reviewObj)
+        });
+        const result = res.json();
+        if(!res.ok) return alert(result.message);
+        console.log(result);
+        alert("Review submitted" + result.message);
+        
+        
+    }
+    catch(err)
+    {
+        console.log(err);
+        alert("Something went wrong " + err.message);
+    }
   };
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -145,14 +181,14 @@ const ToursDetails = () => {
                         <img src={avatar} alt="" />
                         <div className="justify-between w-100 d-flex align-items-center">
                           <div className="review__details align-items-center ">
-                            <h5>Hariom</h5>
+                            <h5>{item?.username}</h5>
                             <p>
-                              {new Date().toLocaleDateString("en-US", options)}
+                              {new Date(item?.createdAt).toLocaleDateString("en-US", options)}
                             </p>
-                            <h6>Amazing Tour</h6>
+                            <h6>{item?.reviewText}</h6>
                           </div>
                           <span className="d-flex align-items-center">
-                            5 <i class="ri-star-s-fill"></i>
+                            {item?.rating} <i class="ri-star-s-fill"></i>
                           </span>
                         </div>
                       </div>

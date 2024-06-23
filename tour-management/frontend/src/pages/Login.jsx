@@ -1,22 +1,52 @@
 import React from "react";
 import { Container, Row, Col, Form, Button, FormGroup } from "reactstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../styles/login.css";
 import loginImage from "../assets/images/login.png";
 import userIcon from "../assets/images/user.png";
 import { useState } from "react";
+import { useContext, useEffect } from "react";
+import { BASE_URL } from "../utils/Config";
+import { AuthContext } from "../context/AuthContext";
 
 const Login = () => {
   const [credentials, setCredentials] = useState({
     email: undefined,
     password: undefined,
   });
+
+  const { dispatch } = useContext(AuthContext);
+  const navigate = useNavigate();
   const handleChange = (e) => {
     setCredentials((prev) => ({ ...prev, [e.target.id]: e.target.value }));
   };
   const handleClick = async (e) => {
     e.preventDefault();
     console.log(credentials);
+    dispatch({ type: "LOGIN_START" });
+
+    try {
+      const res = await fetch(`${BASE_URL}/auth/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(credentials),
+      });
+      const result = await res.json();
+      if (!res.ok) alert(result.message);
+      console.log(result);
+      dispatch({ type: "LOGIN_SUCCESS", payload: {
+         user: result.data,
+         token: result.token
+         } });
+      navigate("/");
+    } catch (err) {
+      console.log(err);
+      dispatch({ type: "LOGIN_FAILURE", payload: err.message });
+      alert("Something went wrong " + err.message);
+    }
   };
   return (
     <section>
@@ -28,7 +58,11 @@ const Login = () => {
                 <img src={loginImage} alt="" />
               </div>
 
-              <div className="login__form sm:w-full md:w-full lg:w-2/5 " sm="12" md="10">
+              <div
+                className="login__form sm:w-full md:w-full lg:w-2/5 "
+                sm="12"
+                md="10"
+              >
                 <div className="user">
                   <img src={userIcon} alt="" />
                 </div>

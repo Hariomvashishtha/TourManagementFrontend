@@ -11,7 +11,7 @@ const SearchResultList = () => {
   // It contains information about the current URL, such as the path, search parameters, and hash.
   // In this code, `useLocation` is used to get the current location object and store it in a variable called `location`.
   // The `location` object can then be used to access the current URL information.
-  debugger;
+  //debugger;
   const location = useLocation();
   const [tours,setTours] = useState(location.state);
 
