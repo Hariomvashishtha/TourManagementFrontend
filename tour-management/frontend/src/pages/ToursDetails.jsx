@@ -23,7 +23,8 @@ const ToursDetails = () => {
   const reviewMsgRef = useRef('');
   const [tourRating, setTourRating] = useState(null);
   const {user} = useContext(AuthContext);
-  const token = localStorage.getItem("token") ? localStorage.getItem("token") : null;
+  const loggedInUser =  localStorage.getItem("user") ? localStorage.getItem("user") : null;
+  const token = JSON.parse(loggedInUser)?.token;
   
   // this is static data , later we will fetch from backend
   // const tour = toutData.find((item) => item.id == id);
