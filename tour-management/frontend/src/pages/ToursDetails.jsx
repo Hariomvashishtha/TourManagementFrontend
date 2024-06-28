@@ -23,6 +23,7 @@ const ToursDetails = () => {
   const reviewMsgRef = useRef('');
   const [tourRating, setTourRating] = useState(null);
   const {user} = useContext(AuthContext);
+  const token = localStorage.getItem("token") ? localStorage.getItem("token") : null;
   
   // this is static data , later we will fetch from backend
   // const tour = toutData.find((item) => item.id == id);
@@ -66,7 +67,8 @@ const ToursDetails = () => {
         const payload = {
           method: "POST",
           headers: {
-              "Content-Type": "application/json"
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${token}`
           },
           credentials: "include",
           body: JSON.stringify(reviewObj)
@@ -75,7 +77,8 @@ const ToursDetails = () => {
         const res = await fetch(`${BASE_URL}/review/${id}`, {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
             },
             credentials: "include",
             body: JSON.stringify(reviewObj)
