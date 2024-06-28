@@ -11,10 +11,10 @@ const nav_links = [
     path: "/",
     display: "Home",
   },
-  {
-    path: "/about",
-    display: "About",
-  },
+  // {
+  //   path: "/about",
+  //   display: "About",
+  // },
   {
     path: "/tours",
     display: "Tours",
@@ -22,6 +22,7 @@ const nav_links = [
 ];
 const Header = () => {
   const headerRef = useRef(null);
+  const menuRef = useRef(null);
   const navigate = useNavigate();
   const { user, dispatch } = useContext(AuthContext);
  // debugger;
@@ -46,7 +47,9 @@ const Header = () => {
   useEffect(() => {
     stikyHeader();
     window.removeEventListener("scroll", stikyHeader);
-  }, [])
+  }, []);
+
+  const toggleMenu = () => menuRef.current.classList.toggle('show__menu')
   return (
     <>
       <header className="header" ref={headerRef}>
@@ -59,7 +62,7 @@ const Header = () => {
               </div>
 
               {/* // menu start  */}
-              <div className="navigation">
+              <div className="navigation" ref={menuRef} onClick={toggleMenu}>
                 <ul className="gap-5 menu d-flex align-itens-center">
                   {nav_links.map((item, index) => {
                     return (
@@ -112,7 +115,7 @@ const Header = () => {
                   )}
                  
                 </div>
-                <span className="mobile_menu">
+                <span className="mobile_menu" onClick={toggleMenu}>
                   <i class="ri-menu-line"></i>
                 </span>
               </div>

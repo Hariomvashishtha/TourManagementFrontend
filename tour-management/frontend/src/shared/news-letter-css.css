@@ -58,3 +58,27 @@
     font-size: 1.2rem;
     margin-bottom: 2rem;    
 }
+
+@media screen and (max-width: 992px) {
+    .newsletter__content h2{
+        font-size: 2rem;
+        font-weight: 500;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
+    
+}
+@media screen and (max-width: 576px) {
+    .newsletter__content h2{
+        font-size: 2rem;
+        font-weight: 500;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .newsletter__img{
+        display: block;
+        margin: auto;
+    }
+    
+}
