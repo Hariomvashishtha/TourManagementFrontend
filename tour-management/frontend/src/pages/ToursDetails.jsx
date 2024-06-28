@@ -63,7 +63,15 @@ const ToursDetails = () => {
         };
 
         console.log(reviewObj);
-
+        const payload = {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json"
+          },
+          credentials: "include",
+          body: JSON.stringify(reviewObj)
+      };
+      console.log(payload);
         const res = await fetch(`${BASE_URL}/review/${id}`, {
             method: "POST",
             headers: {
