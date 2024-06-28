@@ -32,7 +32,7 @@ const Layout = () => {
   }, []);
   return (
     <>
-      <AlertMessage message={alertMessage} />
+      {/* <AlertMessage message={alertMessage} /> */}
     <Header />
     <main>
     <Routers />
