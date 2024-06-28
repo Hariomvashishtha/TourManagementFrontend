@@ -19,6 +19,8 @@ const Booking = ({ tour, avgRating }) => {
   const navigate=useNavigate();
   const {user} = useContext(AuthContext);
   const service=10;
+  const loggedInUser =  localStorage.getItem("user") ? localStorage.getItem("user") : null;
+  const token = JSON.parse(loggedInUser)?.token;
   
 
   const [booking, setBooking] = useState({
@@ -46,6 +48,7 @@ const Booking = ({ tour, avgRating }) => {
         method: "post",
         headers: {
           "content-type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         credentials: "include",
         body: JSON.stringify(booking),
