@@ -8,10 +8,10 @@ const quick_links01 = [
     path: "/",
     display: "Home",
   },
-  {
-    path: "/about",
-    display: "About",
-  },
+  // {
+  //   path: "/about",
+  //   display: "About",
+  // },
   {
     path: "/tours",
     display: "Tours",
@@ -19,7 +19,7 @@ const quick_links01 = [
 ];
 const quick_links02 = [
   {
-    path: "/gallery",
+    path: "/tours",
     display: "Gallery",
   },
   {
@@ -27,7 +27,7 @@ const quick_links02 = [
     display: "Login",
   },
   {
-    path: "/register",
+    path: "/signup",
     display: "Register",
   },
 ];
@@ -46,7 +46,7 @@ const footer = () => {
               Lorem ipsum dolor, sit amet consectetur adipisicing elit. Id,
               magnam.
             </p>
-            <div className="gap-4 social__links d-flex align-items-center">
+            {/* <div className="gap-4 social__links d-flex align-items-center">
               <span>
                 <Link to="#">
                   <i class="ri-youtube-line"></i>
@@ -67,7 +67,7 @@ const footer = () => {
                   <i class="ri-linkedin-line"></i>
                 </Link>
               </span>
-            </div>
+            </div> */}
           </div>
         </Col>
 
